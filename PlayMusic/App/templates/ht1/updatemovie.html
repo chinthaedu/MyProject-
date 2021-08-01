@@ -1,0 +1,32 @@
+{% extends 'ht1/base.html' %}
+{% block title %} Songs List {% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+	<div class="card col-md-6 mx-auto shadow-lg">
+		<h3>Movie Update</h3>
+		<form method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<table class="table table-borderless table-hover">			
+				<tr>
+					<td>Update Movie Name Here!</td>
+					<td><input type="text" name="moviename" id="moviename" value="{{data.moviename}}" class="form-control my-2"></td>
+				</tr>
+				<tr>
+					<td>Update Movie Album Here!</td>
+					<td>
+						<input type="file" name="album" value="{{data.album.url}}" class="form-control my-2">
+					</td>
+				</tr>
+			</table>
+			<div class="row">
+				<div class="col">
+					<a href="{% url 'addmovie' %}" class="btn btn-outline-primary form-control my-2">Back to List</a>
+				</div>
+				<div class="col">
+					<input type="submit" value="Update" class="btn btn-outline-success form-control my-2">
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'ht1/base.html' %}
+{% block title %} Songs List {% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+	{% if messages %}
+	{% for m in messages %}
+	<div class="alert alert-{{m.tags}} alert-dismissible" id="dismiss">
+		<div>{{m}}</div>
+	  <a href="#" class="close" data-dismiss="alert" id="x" aria-label="close">&times;</a>
+	</div>
+	{% endfor %}
+	{% endif %}
+	<div class="row">
+		<div class="card col-md-4 shadow-lg mx-3 h-100">
+			<div class="card-body">
+				<form method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<h3 class="text-center text-light bg-secondary p-2 border-rounded">Add Movie</h3>
+					{% for i in movieform %}
+						<div>
+							{{i}}
+						</div>
+					{% endfor %}
+					<div class="row">
+						<div class="col">
+							<input type="reset" name="Reset" class="btn btn-outline-info my-2 form-control">
+						</div>
+						<div class="col">
+							<input type="submit" value="Add" class="btn btn-outline-success my-2 form-control">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="card col-md-6 shadow-lg mx-3 h-100 bg-dark">
+			<div class="card-body">
+				<h3 class="text-center text-light bg-danger p-2 border-rounded" id="flip">Movie List</h3>
+				<div id="panel">
+					<table class="table">
+					{% for i in data %}
+						<tr>
+							<td>
+								<a href="{% url 'moviesList' i.id %}" class="mx-2"><span class="badge badge-info text-center" style="font-size: 12px; width:150px;">{{i.moviename}}</span></a>
+							</td>
+							<td>
+								<img src="{{i.album.url}}" class="img rounded" width="40px" height="40px"> 
+							</td>
+							<td>
+								<a href="{% url 'updatemovie' i.id %}" class="btn btn-outline-warning mx-2" style="">Update</a>
+								<a href="{% url 'deletemovie' i.id %}" id="deleteconfirm" class="btn btn-outline-danger mx-2">Delete</a>
+							</td>
+						</tr>
+					{% endfor %}
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

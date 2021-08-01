@@ -1,0 +1,35 @@
+{% extends 'ht1/base.html' %}
+{% block title %} Subscricption{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+	{% if messages %}
+	{% for m in messages %}
+	<div class="alert alert-{{m.tags}} alert-dismissible" id="dismiss">
+		<div>{{m}}</div>
+	  <a href="#" class="close" data-dismiss="alert" id="x" aria-label="close">&times;</a>
+	</div>
+	{% endfor %}
+	{% endif %}
+	<div class="row">
+		{% if u1.is_sub == 0 %}
+		<div class="card col-md-4 shadow-lg mx-3 h-100">
+			<div class="card-body">
+				<form method="post">
+					{% csrf_token %}
+					<h3 class="text-center text-light bg-secondary p-2 border-rounded"> click here to get subscription</h3>
+					<input type="submit" value="Subscribe" class="btn btn-outline-success my-2 form-control">
+				</form>
+			</div>
+		</div>
+		{% else %}
+		<div class="card col-md-8 shadow-lg mx-3 h-100">
+				<div class="jumbotron">
+					<h2 style="color:blue;text-align:center"> you are a subscriber</h2>
+				</div>
+		</div>
+		{% endif %}
+	</div>
+		
+</div>
+{% endblock %}

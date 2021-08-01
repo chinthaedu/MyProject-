@@ -1,0 +1,32 @@
+{% extends 'ht1/base.html' %}
+{% block title %}Feedback{% endblock %}
+{% block content %}
+<div class="container mt-4">
+	{% if messages %}
+	{% for m in messages %}
+	<div class="alert alert-{{m.tags}} alert-dismissible" id="dismiss">
+		<div>{{m}}</div>
+	  <a href="#" class="close" data-dismiss="alert" id="x" aria-label="close">&times;</a>
+	</div>
+	{% endfor %}
+	{% endif %}
+	<div class="card col-md-6 mx-auto shadow-lg ">
+		<h3>Feedback Form</h3>
+		<form method="post">
+			{% csrf_token %}
+			<input type="text" name="snmail" class="form-control my-2" placeholder="Enter Your mail Id">
+			<input type="text" name="sub" class="form-control my-2" placeholder="Enter Subject">
+			<textarea class="form-control my-2" placeholder="Enter Message..." name="msg" rows="5"></textarea>
+			<div class="row">
+				<div class="col">
+					<input type="reset" value="Reset" class="form-control my-2 btn btn-outline-danger">
+				</div>
+				<div class="col">
+					<input type="submit" value="Send" class="form-control my-2 btn btn-outline-success">
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>
+{% endblock %}

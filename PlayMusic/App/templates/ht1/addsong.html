@@ -1,0 +1,73 @@
+{% extends 'ht1/base.html' %}
+{% block title %} Songs List {% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+	{% if messages %}
+	{% for m in messages %}
+	<div class="alert alert-{{m.tags}} alert-dismissible" id="dismiss">
+		<div>{{m}}</div>
+	  <a href="#" class="close" data-dismiss="alert" id="x" aria-label="close">&times;</a>
+	</div>
+	{% endfor %}
+	{% endif %}
+	<div class="row">
+		<div class="card col-md-4 shadow-lg mx-2 h-100">
+			<div class="card-body">
+				<form method="post" enctype="multipart/form-data">
+					{% csrf_token %}
+					<h3 class="text-center text-light bg-secondary p-2 border-rounded">Add Song</h3>
+					{% for i in songform %}
+						{% if forloop.counter == 1 %}
+						<select name="moviename" class="form-control my-2">
+							{% for mv in movies %}
+							<option>{{mv}}</option>
+							{% endfor %}
+						</select>
+						<!--
+							<input type="text" name="moviename" list="movieslist" class="form-control my-2">
+						<datalist id="movieslist">
+							{% for mv in movies %}
+							<option value="{{mv}}">
+							{% endfor %}
+						</datalist>
+						-->
+						{% else %}
+						<div>{{i}}</div>
+						{% endif %}
+					{% endfor %}
+					<div class="row">
+						<div class="col">
+							<input type="reset" name="Reset" class="btn btn-outline-info my-2 form-control">
+						</div>
+						<div class="col">
+							<input type="submit" value="Add" class="btn btn-outline-success my-2 form-control">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="card col-md-6 shadow-lg mx-3 h-100 bg-dark">
+			<div class="card-body">
+				<h3 class="text-center text-light bg-danger p-2 border-rounded" id="flip">Songs List</h3>
+				<div id="panel">
+					<table class="table">
+					{% for i in a %}
+						<tr>
+							<td>
+								<a href="{% url 'updatesong' i.id %}" class="mx-2"><span class="badge badge-info text-center" style="font-size: 12px; width:150px;">{{i.songname}}</span></a>
+							</td>
+							<td>
+								<a href="{% url 'updatesong' i.id %}" class="btn btn-outline-warning mx-2">Update</a>
+								<a href="{% url 'deletesong' i.id %}" class="btn btn-outline-danger mx-2">Delete</a>
+							</td>
+						</tr>
+					{% endfor %}
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

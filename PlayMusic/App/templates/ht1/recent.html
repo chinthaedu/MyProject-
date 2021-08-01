@@ -1,0 +1,42 @@
+{% extends 'ht1/base.html' %}
+{% block title %} Songs List {% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+	{% if messages %}
+	{% for m in messages %}
+	<div class="alert alert-{{m.tags}} alert-dismissible" id="dismiss">
+		<div>{{m}}</div>
+	  <a href="#" class="close" data-dismiss="alert" id="x" aria-label="close">&times;</a>
+	</div>
+	{% endfor %}
+	{% endif %}
+	<div class="card col-md shadow-lg mx-3 h-100">
+		<div class="card-body">
+			<h3 class="text-center text-light bg-danger p-2 rounded row">
+				<div class="col-10">
+					Recent PlayList
+				</div>
+				<div class="col-2">
+					<a href="{% url 'clearAllRecents' %}" class="btn btn-success mx-auto" style="margin-left: 10px;">Clear All</a>
+				</div>
+			</h3>
+			<table class="table table-borderless table-hover bg-dark text-light rounded">
+			{% for i in rdata %}
+				<tr>
+					<td>
+						<a href="{% url 'playsong' i.3 i.4 %}" class="mx-2"><span class="badge badge-info text-center" style="vertical-align: middle;font-size: 18px; width:250px;">{{i.0}}</span></a>
+						<img src="{{i.2}}" class="img rounded mx-2" width="40px" height="40px">
+					</td>
+					<td>
+						<a href="{% url 'removeRecents' i.3 %}" class="btn btn-danger">Remove from Recents</a>
+					<td>
+						<a href="{% url 'playsong' i.3 i.4 %}" class="btn btn-success mx-2">Play</a>
+					</td>
+				</tr>
+			{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

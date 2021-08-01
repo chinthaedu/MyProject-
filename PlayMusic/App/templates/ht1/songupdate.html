@@ -1,0 +1,23 @@
+{% extends 'ht1/base.html' %}
+{% block title %} Songs List {% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+	<div class="card col-md-6 mx-auto shadow-lg">
+		<h3>Song Update</h3>
+		<form method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<table class="table table-borderless table-hover">
+				{{q.as_table}}
+			</table>
+			<div class="row">
+				<div class="col">
+					<a href="{% url 'add' %}" class="btn btn-outline-primary form-control my-2">Back to List</a>
+				</div>
+				<div class="col">
+					<input type="submit" value="Update" class="btn btn-outline-success form-control my-2">
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

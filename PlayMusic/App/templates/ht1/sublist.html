@@ -1,0 +1,23 @@
+{% extends 'ht1/base.html' %}
+{% block title %} Subscribers list{% endblock %}
+{% block content %}
+
+<center>
+	<div class="card col-md-6 shadow-lg mx-5 my-5 h-100 bg-dark">
+			<div class="card-body">
+				<h3 class="text-center text-light bg-danger p-2 border-rounded" id="flip">Subscribers List</h3>
+				<div id="panel">
+					<table class="table" border="2">
+					{% for i in u1 %}
+						<tr>
+							<th style="color:red">
+								{{i.username}}
+							</th>
+						</tr>
+					{% endfor %}
+					</table>
+				</div>
+			</div>
+	</div>
+</center>
+{% endblock %}

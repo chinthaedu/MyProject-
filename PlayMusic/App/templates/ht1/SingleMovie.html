@@ -1,0 +1,57 @@
+{% extends 'ht1/base.html' %}
+{% block title %} Movie Songs {% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+	{% if messages %}
+	{% for m in messages %}
+	<div class="alert alert-{{m.tags}} alert-dismissible" id="dismiss">
+		<div>{{m}}</div>
+	  <a href="#" class="close" data-dismiss="alert" id="x" aria-label="close">&times;</a>
+	</div>
+	{% endfor %}
+	{% endif %}
+	<div class="card col-md-12 shadow-lg mx-2 h-100">
+		<div class="card-body">
+			<h3 class="text-center text-light p-2 rounded" style="background-color: #00215A;">{{alb.moviename}}</h3>
+			<table class="table table-borderless table-hover text-center">
+				<tr>
+					<th>S No.</th>
+					<th>Album</th>
+					<th>Song Name</th>
+					<th>Song</th>
+				</tr>
+
+				{% for i in m %}
+					<tr>
+						<td>{{forloop.counter}}</td>
+						<td>
+							<img src="{{alb.album.url}}" class="img rounded shadow-lg mx-auto d-block" width="auto" height="50px">
+						</td>
+						<td>{{i.songname}}</td>
+						<td class="bg-dark">
+							<audio class="form-control bg-info" controls style="width: 450px;">
+								<source class="form-controls bg-info" src="{{i.song.url}}" type="audio/mpeg">
+							</audio>
+						</td>
+
+						<td>
+							<a href="{% url 'updatesong' i.id %}" class="btn btn-outline-success">update</a>
+							<a href="{% url 'deletesong' i.id %}" class="btn btn-outline-danger">delete</a>
+						</td>
+					</tr>
+			
+				{% endfor %}
+			</table>
+			<div class="row">
+				<div class="col">
+					<a href="{% url 'addmovie' %}" class="btn btn-danger form-control">Back</a>
+				</div>
+				<div class="col">
+					<a href="{% url 'add' %}" class="btn btn-success form-control">Add New Song</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

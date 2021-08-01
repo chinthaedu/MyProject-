@@ -1,0 +1,49 @@
+{% extends 'ht1/base.html' %}
+{% block title %} Songs List {% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+	{% if messages %}
+	{% for m in messages %}
+	<div class="alert alert-{{m.tags}} alert-dismissible" id="dismiss">
+		<div>{{m}}</div>
+	  <a href="#" class="close" data-dismiss="alert" id="x" aria-label="close">&times;</a>
+	</div>
+	{% endfor %}
+	{% endif %}
+	<div class="card col-md shadow-lg mx-3 h-100">
+		<div class="card-body">
+			<h3 class="text-center text-light bg-danger p-2 rounded">{{mv.moviename}}</h3>
+			<table class="table table-borderless table-hover bg-dark text-light rounded">
+			{% for i in s %}
+				<tr>
+					<td>
+						<a href="{% url 'playsong' i.id mv.id %}" class="mx-2"><span class="badge badge-info text-center" style="vertical-align: middle;font-size: 18px; width:250px;">{{i.songname}}</span></a>
+						<img src="{{mv.album.url}}" class="img rounded mx-2" width="40px" height="40px">
+						{% if i not in favlist %}
+						<a href="{% url 'addFavourites' i.id %}" class="btn btn-danger mx-2">
+							Add to Favorites
+						</a>
+						{% else %}
+						<a href="{% url 'removeFavourites' i.id %}" class="btn btn-danger mx-2">
+							Remove from Favorites
+						</a>
+						{% endif %}
+					</td>
+					<td>
+						<a href="{% url 'playsong' i.id mv.id %}" class="btn btn-success">Play</a>
+					</td>
+					<td>
+						<a href="{{i.song.url}}" download="{{i.song.url}}">
+							<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="black" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
+							  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+							</svg>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}

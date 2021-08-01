@@ -1,0 +1,89 @@
+{% extends 'ht1/base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+{% load static %}
+
+{% if user.role == 3 %}
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="2100">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
+  </ol>
+  <div class="carousel-inner text-center">
+    <div class="carousel-item active">
+      <div class="text-center">
+        <a href="{% url 'playsong' recent.id rcmovie.id %}"><img class="rounded shadow-lg" src="{{rcmovie.album.url}}" height="250px" width="400px"></a>
+      </div>
+    </div>
+  
+    {% for i in alldata %}
+      {% for j in top6 %}
+        {% if i.id == j.mv_id %}
+        <div class="carousel-item">
+          <div class="text-center">
+            <a href="{% url 'playsong' j.id i.id %}"><img class="rounded shadow-lg" src="{{i.album.url}}" height="250px" width="400px" ></a>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+{% endif %}
+{% if user.role == 3 and user.is_sub == 0 %}
+<div class="jumbotron mx-3 my-5">
+  <h2 style="color: tomato;text-align: center;">If you want to subscribe click subscription link shown in above navbar</h2>
+</div> 
+{% endif %}
+{% if user.role == 3 and user.is_sub == 1 %}
+<div class="card bg-success">
+  <div class="row">
+    {% for i in alldata %}
+    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-1">
+      <div class="card shadow-lg rounded mx-2 my-3">
+        <a href="{% url 'moviesongslist' i.id %}">
+          <img src="{{i.album.url}}" class="img-responsive rounded" height="190px" width="100%">
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+  {% elif user.is_superuser %}
+  <div class="jumbotron col-md-6 mx-auto shadow-lg mt-4">
+    <h3>You are Admin</h3>
+  </div>
+
+  {% elif user.role == 2 %}
+  <div class="jumbotron col-md-6 mx-auto shadow-lg mt-4">
+    <h3>Hello Manager</h3>
+  </div>
+
+  {% elif user.role == 1 %}
+  <div class="jumbotron col-md-6 mx-auto shadow-lg mt-4">
+    <h3>You are in Guest Account</h3>
+  </div>
+  {% elif user.role != 1 and user.role != 2 and user.role != 3 %}
+  <div class="jumbotron col-md-3 mx-auto shadow-lg mt-2">
+    <h3 style="color:blue;text-align:center">Welcome</h3>
+  </div>
+  <marquee style="color: red " direction="right" scrolldelay="0" vspace="120">Play Music App</marquee>
+  {% endif %}
+</div>
+{% endblock %}
